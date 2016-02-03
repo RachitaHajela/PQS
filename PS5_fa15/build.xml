@@ -1,0 +1,43 @@
+<project name="CanvasApp" default="main">
+	<description>ANT build file to compile, run, and test the code</description>
+	<property name="src" location="src" />
+	<property name="testsrc" location="testsrc" />
+	<property name="bin" location="bin" />
+	<property name="jars" location="jars" />
+	<path id="junit.classpath">
+		<pathelement location="libraries/junit.jar" />
+		<pathelement location="libraries/org.hamcrest.core_1.3.0.v201303031735.jar" />
+		<pathelement location="bin" />
+	</path>
+	<target name="clean">
+		<delete dir="${bin}" />
+		<delete dir="${jars}" />
+	</target>
+	<target name="compile" depends="clean">
+		<mkdir dir="${bin}" />
+		<javac srcdir="${src}" destdir="${bin}" includeantruntime="false" />
+		<javac includeantruntime="false" srcdir="${testsrc}" destdir="${bin}">
+			<classpath refid="junit.classpath" />
+		</javac>
+	</target>
+	<target name="jar" depends="compile">
+		<mkdir dir="${jars}" />
+		<jar destfile="${jars}/CanvasApp.jar" basedir="${bin}">
+			<manifest>
+				<attribute name="Main-Class" value="edu.nyu.cs.pqs.CanvasApp" />
+			</manifest>
+		</jar>
+	</target>
+	<target name="run" depends="jar">
+		<java jar="${jars}/CanvasApp.jar" fork="true" />
+	</target>
+	<target name="unittest" depends="compile">
+		<junit haltonfailure="no" printsummary="true">
+			<classpath refid="junit.classpath" />
+			<test name="edu.nyu.cs.pqs.testCanvasModel" />
+		</junit>
+	</target>
+	<target name="main" depends="run">
+		<description>Default is to compile and run the App</description>
+	</target>
+</project>
