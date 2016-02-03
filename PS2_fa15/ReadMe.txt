@@ -1,0 +1,3 @@
+Your library implementation will provide stopwatch objects for timing tasks. The stopwatch objects support the typical operations of a physical stopwatch: start, stop, restart, and the recording of laps (times intervals). Also, a stopwatch can be asked for a list of all the lap times that have been recorded using that stopwatch (if the stopwatch has just been started and stopped once, then the list is of size one and contains the elapsed time).
+
+Both the stopwatch objects and the stopwatch factory need to be thread-safe. That means they might be shared by a number of different threads. 
